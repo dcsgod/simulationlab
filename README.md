@@ -183,8 +183,13 @@ mathematical_engine/tests/test_phase2_advanced.py PASSED
 
 To connect to your Databricks workspace:
 
-1. In the UI, navigate to **Data Sources** $\rightarrow$ **Configure Databricks UC**.
-2. Or use the REST API:
+1. Copy the `.env.example` file to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Populate `DATABRICKS_TOKEN`, `DATABRICKS_SERVER_HOSTNAME`, and `DATABRICKS_HTTP_PATH`.
+3. In the UI, navigate to **Data Sources** $\rightarrow$ **Databricks Unity Catalog (Live)** to test the live connection.
+4. Or configure dynamically via the REST API:
 
 ```bash
 curl -X POST "http://127.0.0.1:8000/api/connectors/databricks/configure" \
