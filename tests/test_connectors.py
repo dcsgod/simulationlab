@@ -90,11 +90,12 @@ class TestDatabricksSecurityAndConfig:
         assert masked.endswith("7890")
 
     def test_connector_offline_test_connection(self):
+        from unittest.mock import patch
         cfg = DatabricksConfig(
             server_hostname="invalid-host-offline.net",
             http_path="/sql/1.0/warehouses/dummy",
             access_token="dapi-dummy-token",
         )
         conn = DatabricksConnector(cfg)
-        # Should gracefully return False without raising uncaught exceptions
-        assert conn.test_connection() is False
+        with patch("databricks.sql.connect", side_effect=ConnectionError("Host unreachable")):
+            assert conn.test_connection() is False
